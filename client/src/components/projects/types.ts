@@ -1,4 +1,4 @@
-import type { TProject } from "../../../types/project.types"
+import type { TProject } from "../../types/project.types"
 
 export type TProjectCartProps = {
     project: TProject
