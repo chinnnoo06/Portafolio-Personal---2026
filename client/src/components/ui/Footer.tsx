@@ -1,4 +1,8 @@
+import { useNavigation } from "../../hooks/useNavigation";
+
 export const Footer = () => {
+  const { isInicio, actions } = useNavigation()
+
   return (
     <div className="footer-container bg-[#272727] border-t border-[#3d3d3d] font-poppins">
       <footer className="max-w-7xl mx-auto py-12 px-4">
@@ -21,26 +25,33 @@ export const Footer = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-0">
 
-            <div className="flex flex-col items-center lg:items-start text-center lg:text-start gap-3">
+            <nav className="flex flex-col items-center lg:items-start text-center lg:text-start gap-3">
               <h3 className="text-[#b03a3a] font-semibold uppercase text-lg">Enlaces Rápidos</h3>
-              <div className="flex flex-col gap-2">
-                <a href="#inicio" className="text-[#dde1e9] hover:text-[#b03a3a] transition duration-300 text-base">
-                  Inicio
-                </a>
-                <a href="#sobremi" className="text-[#dde1e9] hover:text-[#b03a3a] transition duration-300 text-base">
-                  Sobre Mí
-                </a>
-                <a href="#servicios" className="text-[#dde1e9] hover:text-[#b03a3a] transition duration-300 text-base">
-                  Servicios
-                </a>
-                <a href="#contacto" className="text-[#dde1e9] hover:text-[#b03a3a] transition duration-300 text-base">
-                  Contacto
-                </a>
-                <a href="#proyectos" className="text-[#dde1e9] hover:text-[#b03a3a] transition duration-300 text-base">
-                  Proyectos
-                </a>
-              </div>
-            </div>
+              {[
+                ["inicio", "Inicio"],
+                ["sobremi", "Sobre Mí"],
+                ["servicios", "Servicios"],
+                ["contacto", "Contacto"],
+              ].map(([id, label]) => (
+                <button
+                  key={id}
+                  onClick={() =>
+                    isInicio ? actions.scrollToSection(id) : actions.navigateToSection(id)
+                  }
+                  className='text-base font-medium transition-colors duration-300 uppercase text-[#dde1e9] hover:text-[#b03a3a]'
+                >
+                  {label}
+                </button>
+              ))}
+
+              <button
+                onClick={() => actions.navigate("/proyectos")}
+                className='text-base font-medium transition-colors duration-300 uppercase text-[#dde1e9] hover:text-[#b03a3a]'
+              >
+                Proyectos
+              </button>
+
+            </nav>
 
 
             <div className="flex flex-col items-center lg:items-end gap-3">

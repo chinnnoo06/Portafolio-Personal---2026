@@ -1,89 +1,9 @@
-import { useState, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import { NavMobile } from "./NavMobile";
+import { useNavigation } from "../../../hooks/useNavigation";
 
 export const Header = () => {
-  const [menuVisible, setMenuVisible] = useState(false);
-  const [showHeader, setShowHeader] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
-  const [activeSection, setActiveSection] = useState("inicio");
+  const {menuVisible, showHeader, activeSection, isInicio, actions} = useNavigation()
 
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  const isInicio = location.pathname === "/";
-
-  // Scroll de secciones
-  useEffect(() => {
-    if (!isInicio) return;
-
-    const sections = Array.from(
-      document.querySelectorAll<HTMLElement>("section[id]")
-    );
-
-    const HEADER_OFFSET = 100;
-
-    const onScroll = () => {
-      if (window.scrollY === 0) {
-        setActiveSection("inicio");
-        return;
-      }
-
-      let currentId = "inicio";
-
-      for (const section of sections) {
-        const top = section.getBoundingClientRect().top;
-
-        if (top - HEADER_OFFSET <= 0) {
-          currentId = section.id;
-        } else {
-          break;
-        }
-      }
-
-      setActiveSection(currentId);
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll(); // inicial
-
-    return () => window.removeEventListener("scroll", onScroll);
-  }, [isInicio]);
-
-  // OCULTAR / MOSTRAR HEADER
-  useEffect(() => {
-    const handleScroll = () => {
-      if (menuVisible) return;
-
-      const currentScrollY = window.scrollY;
-      if (currentScrollY > lastScrollY && currentScrollY > 100) {
-        setShowHeader(false);
-      } else {
-        setShowHeader(true);
-      }
-      setLastScrollY(currentScrollY);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [lastScrollY, menuVisible]);
-
-  const scrollToSection = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth" });
-      setMenuVisible(false);
-    }
-  };
-
-  const navigateToSection = (id: string) => {
-    navigate("/");
-    setTimeout(() => {
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: "smooth" });
-    }, 300);
-    setMenuVisible(false);
-  };
   return (
 
     <header className={`fixed top-0 left-0 w-full z-50 bg-[#272727] transition-transform duration-300 ${showHeader ? "translate-y-0" : "-translate-y-full"
@@ -108,7 +28,7 @@ export const Header = () => {
             <button
               key={id}
               onClick={() =>
-                isInicio ? scrollToSection(id) : navigateToSection(id)
+                isInicio ? actions.scrollToSection(id) : actions.navigateToSection(id)
               }
               className={`text-base xl:text-lg font-medium transition-colors duration-300 uppercase ${activeSection === id && isInicio
                 ? "text-[#b03a3a]"
@@ -120,7 +40,7 @@ export const Header = () => {
           ))}
 
           <button
-            onClick={() => navigate("/proyectos")}
+            onClick={() => actions.navigate("/proyectos")}
             className={`text-base xl:text-lg font-medium transition-colors duration-300 uppercase ${location.pathname === "/proyectos" || activeSection == "proyectos"
               ? "text-[#b03a3a]"
               : "text-[#dde1e9] hover:text-[#b03a3a]"
@@ -172,19 +92,19 @@ export const Header = () => {
         <div
           className={`flex justify-end lg:hidden text-[#dde1e9] text-[1.6rem] cursor-pointer hover:text-[#b03a3a]
             ${menuVisible ? "hidden" : "flex"}`}
-          onClick={() => setMenuVisible(!menuVisible)}
+          onClick={() => actions.setMenuVisible(!menuVisible)}
         >
           <i className="fa-solid fa-bars" />
         </div>
       </div>
 
       <NavMobile
-        onClose={() => setMenuVisible(!menuVisible)}
+        onClose={() => actions.setMenuVisible(!menuVisible)}
         menuVisible={menuVisible}
         activeSection={activeSection}
         isInicio={isInicio}
-        scrollToSection={scrollToSection}
-        navigateToSection={navigateToSection} />
+        scrollToSection={actions.scrollToSection}
+        navigateToSection={actions.navigateToSection} />
 
     </header>
   );

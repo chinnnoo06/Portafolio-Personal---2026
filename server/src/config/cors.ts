@@ -7,7 +7,7 @@ export const corsOptions: CorsOptions = {
             return callback(null, true);
         }
 
-        // Permite tu frontend
+        // Permite frontend
         if (origin === FRONTEND_URL) {
             return callback(null, true);
         }

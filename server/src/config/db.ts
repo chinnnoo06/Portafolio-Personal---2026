@@ -1,10 +1,11 @@
 import mongoose from 'mongoose'
 import colors from 'colors'
+import { MONGO_URI } from './env';
 
 export const connectDB = async () => {
 
     try {
-        const mongoUri = process.env.MONGO_URI;
+        const mongoUri = MONGO_URI;
 
         if (!mongoUri) {
             throw new Error("MONGO_URI no está definida en el .env");

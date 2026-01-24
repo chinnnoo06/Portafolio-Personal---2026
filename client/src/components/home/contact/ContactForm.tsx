@@ -1,33 +1,11 @@
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "react-toastify";
-import type { TContact } from "../../../types/contact.types";
-import { ContactSchema } from "../../../schemas/contact.schemas";
 import { inputStyle } from "../../../helpers/styles";
-import { sendContactEmail } from "../../../services/contact.service";
+import { useContactForm } from "../../../hooks/useContactForm";
 
 export const ContactForm = () => {
-    const { register, handleSubmit, reset, formState: { errors } } = useForm<TContact>({
-        resolver: zodResolver(ContactSchema)
-    })
-
-    const onSubmit = async (data: TContact) => {
-        try {
-            await sendContactEmail(data)
-            reset()
-            toast.success('Mensaje enviado correctamente', {
-                className: 'toast-success',
-                toastId: 'emailContact',
-            });
-        } catch (error) {
-            toast.error(
-                error instanceof Error ? error.message : "Error inesperado"
-            );
-        }
-    }
+    const {loading, errors, actions} = useContactForm()
 
     return (
-        <form className='space-y-6' onSubmit={handleSubmit(onSubmit)}>
+        <form className='space-y-6' onSubmit={actions.handleSubmit(actions.onSubmit)}>
 
             <div className="form-group ">
                 <label htmlFor="name" className="block font-semibold text-[#dde1e9] mb-2 text-sm lg:text-base ">
@@ -37,7 +15,7 @@ export const ContactForm = () => {
                     type="text"
                     id="name"
                     placeholder="Ej. Francsico Inda"
-                    {...register("name")}
+                    {...actions.register("name")}
                     className={inputStyle}
                 />
 
@@ -54,7 +32,7 @@ export const ContactForm = () => {
                     type="text"
                     id="email"
                     placeholder="Ej. correo@ejemplo.com"
-                    {...register("email")}
+                    {...actions.register("email")}
                     className={inputStyle}
                 />
 
@@ -73,7 +51,7 @@ export const ContactForm = () => {
                     type="text"
                     id="Subject"
                     placeholder="Ej. Cotización Proyecto"
-                    {...register("subject")}
+                    {...actions.register("subject")}
                     className={inputStyle}
                 />
 
@@ -91,7 +69,7 @@ export const ContactForm = () => {
                     maxLength={450}
                     id="Message"
                     placeholder="Escribe tu mensaje"
-                    {...register("message")}
+                    {...actions.register("message")}
                     className={inputStyle}
                 />
 
@@ -100,11 +78,11 @@ export const ContactForm = () => {
                 )}
             </div>
 
-   
             <button
-                className='text-sm lg:text-base px-3 py-2 bg-[#b03a3a] text-white rounded hover:bg-[#932f2f] transition-colors duration-300 cursor-pointer'
+                disabled={loading}
+                className='disabled:opacity-65 text-sm lg:text-base px-3 py-2 bg-[#b03a3a] text-white rounded hover:bg-[#932f2f] transition-colors duration-300 cursor-pointer'
                 type="submit">
-                Mandar Mensaje
+                {loading ? 'Cargando...' : 'Mandar Mensaje'}
             </button>
         </form>
     )
