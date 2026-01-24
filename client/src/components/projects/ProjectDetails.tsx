@@ -89,8 +89,8 @@ export const ProjectDetails = () => {
             {/* IMAGEN + LINK */}
             <motion.div {...slideInBottom} className="space-y-6">
 
-                <div className="relative overflow-hidden rounded-lg space-y-6">
-                    <div ref={emblaRef} className="overflow-hidden">
+                <div className="relative overflow-hidden space-y-6">
+                    <div ref={emblaRef} className="overflow-hidden rounded-lg">
                         <div className="flex">
                             {projectSelected.images.map((image, index) => (
                                 <div
