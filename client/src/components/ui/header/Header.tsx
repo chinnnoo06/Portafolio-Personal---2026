@@ -1,5 +1,6 @@
 import { NavMobile } from "./NavMobile";
 import { useNavigation } from "../../../hooks/useNavigation";
+import { Link } from "react-router-dom";
 
 export const Header = () => {
   const {menuVisible, showHeader, activeSection, isInicio, actions} = useNavigation()
@@ -11,11 +12,11 @@ export const Header = () => {
       <div className="max-w-7xl mx-auto h-22 px-4 uppercase flex justify-between items-center lg:grid grid-cols-[1fr_auto_1fr] font-poppins">
 
         <div className="justify-start" translate="no">
-          <a href="#inicio">
+          <Link to='/'>
             <h1 className="text-xl xl:text-2xl text-[#dde1e9] font-bold">
               FRANCISCO <span className="text-[#b03a3a]">INDA</span>
             </h1>
-          </a>
+          </Link>
         </div>
 
         <nav className="hidden lg:flex gap-6 xl:gap-8 justify-center">
