@@ -13,7 +13,7 @@ const transporter = nodemailer.createTransport({
 export const sendContactEmail = async (data: TContact) => {
 
   await transporter.sendMail({
-    from: `"BlueWave | Contacto" <${GMAIL_USER}>`,
+    from: `"Portafolio Web | Contacto" <${GMAIL_USER}>`,
     to: GMAIL_USER, // TU correo
     replyTo: data.email, // 👈 clave: responder al usuario
     subject: `📩 Nuevo mensaje de contacto del portafolio web: ${data.subject}`,
