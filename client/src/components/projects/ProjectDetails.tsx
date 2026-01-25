@@ -76,10 +76,13 @@ export const ProjectDetails = () => {
                             href={projectSelected.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 font-medium text-sm lg:text-base opacity-80 hover:opacity-100 hover:text-[#b03a3a] transition-all duration-200"
+                            className="inline-flex items-center gap-2 font-medium text-sm lg:text-base opacity-80
+                             hover:opacity-100 hover:text-[#b03a3a] transition-all duration-200 break-all max-w-full"
                         >
-                            <i className="fab fa-github text-lg" />
-                            <span>{projectSelected.githubUrl}</span>
+                            <i className="fab fa-github text-lg shrink-0" />
+                            <span className="break-all">
+                                {projectSelected.githubUrl}
+                            </span>
                         </a>
                     </div>
                 )}
