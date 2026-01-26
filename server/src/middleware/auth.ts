@@ -2,17 +2,18 @@ import { NextFunction, Request, Response } from "express";
 import jwt from 'jwt-simple'
 import moment from "moment";
 import { SECRET_KEY } from "../config/env";
-import { TUser } from "../types/user.types";
+import { TPayloadToken } from "../services/jwt.service";
+import { User } from "../models/User";
 
 declare global {
     namespace Express {
         interface Request {
-            user?: TUser
+            user?: TPayloadToken
         }
     }
 }
 
-export const auth = (req: Request, res: Response, next: NextFunction) => {
+export const auth = async (req: Request, res: Response, next: NextFunction) => {
     let token = null;
     // Buscar token en cookies
     if (req.cookies && req.cookies.token) {
@@ -27,11 +28,17 @@ export const auth = (req: Request, res: Response, next: NextFunction) => {
     }
 
     try {
-        const payload = jwt.decode(token, SECRET_KEY);
+        const payload = jwt.decode(token, SECRET_KEY) as TPayloadToken;
 
         // Validar expiración
         if (payload.exp <= moment().unix()) {
             return res.status(401).json({ status: "error", mensaje: "Token expirado" });
+        }
+
+        const exist = await User.exists({ _id: payload._id })
+
+        if (!exist) {
+            return res.status(401).json({ status: "error", mensaje: "Token inválido" });
         }
 
         req.user = payload;
