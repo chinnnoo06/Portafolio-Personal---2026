@@ -13,14 +13,32 @@ export const ProjectCardInfo = ({ project }: TProjectCartProps) => {
                         year: 'numeric'
                     })}
                 </span>
-                <h3 className="font-semibold text-xl lg:text-2xl text-[#272727] group-hover:text-[#b03a3a] transition-colors duration-300">{project.name}</h3>
+                <Link to={`/proyectos/${project.slug}`}>
+                    <h3 className="font-semibold text-xl lg:text-2xl text-[#272727] group-hover:text-[#b03a3a] transition-colors duration-300">{project.name}</h3>
+                </Link>
+
             </div>
 
             <p className="font-medium opacity-65 text-base lg:text-lg">{project.excerpt}</p>
 
-            <Link to={`/proyectos/${project.slug}`} className="self-start">
-                <span className="font-medium text-[#b03a3a] hover:text-[#932f2f] text-base lg:text-lg flex items-center">Ver Detalles</span>
+            <Link to={`/proyectos/${project.slug}`} className="inline-block self-start">
+                <span
+                    className="
+                    font-medium
+                    text-[#b03a3a]
+                    hover:text-[#932f2f]
+                    text-base
+                    lg:text-lg
+                    flex
+                    items-center
+                    transition-colors
+                    duration-200
+                    "
+                >
+                    Ver Detalles
+                </span>
             </Link>
+
         </div>
     )
 }

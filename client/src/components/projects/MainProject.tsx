@@ -3,6 +3,7 @@ import { useProjectStore } from "../../store/projectStore"
 import { motion } from 'framer-motion'
 import { ProjectCardInfo } from "./project-card/ProjectCardInfo"
 import { GlobalImageProject } from "../../helpers/config/env"
+import { Link } from "react-router-dom"
 
 export const MainProject = () => {
     const { projects } = useProjectStore()
@@ -19,14 +20,17 @@ export const MainProject = () => {
                 </h2>
             </motion.div>
 
-            <div className="relative flex flex-col xl:flex xl:items-center xl:flex-row group">
-                <motion.div {...slideInLeft()} className="w-full xl:w-1/2">
-                    <div className="relative aspect-video w-full overflow-hidden rounded-lg border-2 border-[#272727]">
-                        <img
-                            src={`${GlobalImageProject.url}${project.images[0]}`}
-                            alt="Producto"
-                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-                        />
+            <div className="relative flex flex-col  group">
+                <motion.div {...slideInLeft()} className="w-full ">
+                    <div className="relative w-full overflow-hidden rounded-lg border-2 border-[#272727]">
+
+                        <Link to={`/proyectos/${project.slug}`}>
+                            <img
+                                src={`${GlobalImageProject.url}${project.images[0]}`}
+                                alt="Producto"
+                                className="w-full h-auto transition-transform duration-300 group-hover:scale-[1.02]"
+                            />
+                        </Link>
 
                         {/* Overlay oscuro leve */}
                         <div className="absolute inset-0 bg-black opacity-5 pointer-events-none"></div>
@@ -52,21 +56,13 @@ export const MainProject = () => {
                         sm:mx-auto
                         sm:w-[80%]
                         md:w-[70%]
-                        
-                        /* 💻 xl+: comportamiento actual */
-                        xl:mt-0
-                        xl:absolute
-                        xl:right-1
-                        xl:top-1/2
-                        xl:-translate-y-1/2
-                        xl:w-[55%]
                     "
                 >
 
                     <ProjectCardInfo project={project} />
                 </motion.div>
             </div>
-            
+
         </div>
     )
 }
