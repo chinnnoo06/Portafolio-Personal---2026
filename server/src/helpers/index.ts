@@ -1,5 +1,6 @@
 import path from "path";
 import fs from "fs";
+import { UPLOADS_PATH } from "../config/env";
 
 export class HttpError extends Error {
   statusCode: number;
@@ -11,9 +12,12 @@ export class HttpError extends Error {
 }
 
 export const deleteUploadedFiles = (files: Express.Multer.File[]) => {
+
+  const projectsDir = path.resolve(UPLOADS_PATH, "projects");
+
   for (const file of files) {
     try {
-      const filePath = path.join(__dirname, "../uploads/projects", file.filename);
+      const filePath = path.join(projectsDir, file.filename);
       fs.unlinkSync(filePath);
       console.log("Eliminada basura:", file.filename);
     } catch (e) {
