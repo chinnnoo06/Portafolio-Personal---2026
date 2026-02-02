@@ -1,5 +1,5 @@
 import { FaHtml5, FaCss3Alt, FaJsSquare, FaReact, FaGitAlt, FaBootstrap, FaNodeJs, FaPhp, FaJava, FaMicrosoft } from 'react-icons/fa';
-import { SiTailwindcss, SiAngular, SiExpress, SiC, SiCplusplus, SiMysql, SiFirebase, SiFigma, SiSqlite, SiMongodb, SiTypescript, SiPostgresql } from 'react-icons/si';
+import { SiTailwindcss, SiNextdotjs, SiAngular, SiExpress, SiC, SiCplusplus, SiMysql, SiFirebase, SiFigma, SiSqlite, SiMongodb, SiTypescript, SiPostgresql } from 'react-icons/si';
 
 
 export const TechologiesCart = () => {
@@ -30,6 +30,11 @@ export const TechologiesCart = () => {
             <div className='tecnologia flex flex-col items-center text-center'>
                 <FaReact className='text-2xl sm:text-3xl md:text-4xl text-[#61dafb]' />
                 <span className='text-xs text-[#dde1e9] mt-1'>React</span>
+            </div>
+
+            <div className='tecnologia flex flex-col items-center text-center'>
+                <SiNextdotjs className='text-2xl sm:text-3xl md:text-4xl text-white' />
+                <span className='text-xs text-[#dde1e9] mt-1'>Next.js</span>
             </div>
 
             <div className='tecnologia flex flex-col items-center text-center'>
