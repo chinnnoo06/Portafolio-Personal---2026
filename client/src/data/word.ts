@@ -12,7 +12,7 @@ export const words = [
         text: "de",
     },
     {
-        text: "ingenieria",
+        text: "ingeniería",
     },
     {
         text: "en",
